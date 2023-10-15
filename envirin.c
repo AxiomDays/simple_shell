@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(void)
+char** check_path(char *cmd)
 {
 	extern char **environ;
 	char *path, *tok;
 	char **arr = malloc(sizeof(char*) * 1024);
-	char **cpy = malloc(sizeof(char*) * 1024);
-	char *cmd = "/ls";
+	char **newarr = malloc (sizeof(char*) * 1024);
+	char *str;
 	int i = 0;
 
 	path = getenv("PATH");
@@ -25,11 +25,12 @@ int main(void)
 	i = 0;
 	while (arr[i])
 		{
-			cpy[i] = arr[i];
-			strcat(cpy[i], cmd);
-			printf("%s\n", cpy[i]);
+			str = strdup(arr[i]);
+			strcat(str, "/");
+			strcat(str, cmd);
+			newarr[i] = str;
+			printf("%s\n", newarr[i]);
 			i++;
 		}
-
-	return (0);
+	return (newarr);
 }
