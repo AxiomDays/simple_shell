@@ -1,0 +1,7 @@
+#!/bin/bash
+git add .
+echo "adding files..."
+git commit -m $1
+echo "commiting with message"
+echo $1
+git push

@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int prompt(void)
+char* prompt(void)
 {	
-	char *input;	
+	char* input;
+	ssize_t text;	
 	size_t bufsize = 32;
-	size_t text;
 
 	input = (char *)malloc(bufsize * sizeof(char));
 
 	printf("$ ");
 	text = getline(&input, &bufsize, stdin);
-	printf("%s", input);
-	(void)text;
+	if (text == -1)
+		exit(297);
 
-	return (0);
+	return (input);
 }

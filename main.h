@@ -1,2 +1,3 @@
 int check_pid(void);
-int prompt(void);
+char* prompt(void);
+char *_strcpy(char *dest, char *src);
