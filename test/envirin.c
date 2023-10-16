@@ -3,13 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-char** check_path(char *cmd)
+int main(void)
 {
-	extern char **environ;
 	char *path, *tok;
 	char **arr = malloc(sizeof(char*) * 1024);
-	char **newarr = malloc (sizeof(char*) * 1024);
-	char *str;
+	/*char **cpy = malloc(sizeof(char*) * 1024);*/
+	char *cmd = "ls", *str;
 	int i = 0;
 
 	path = getenv("PATH");
@@ -28,9 +27,23 @@ char** check_path(char *cmd)
 			str = strdup(arr[i]);
 			strcat(str, "/");
 			strcat(str, cmd);
-			newarr[i] = str;
-			printf("%s\n", newarr[i]);
+			if (access(str, F_OK) == 0)
+			{
+				if (access(str, X_OK) == 0)
+				{
+					printf("Is executable\n");
+				}
+				else
+				{
+					printf("Permission denied\n");
+				}
+			}
+			else
+			{
+				printf("File not found\n");
+			}
 			i++;
 		}
-	return (newarr);
+
+	return (0);
 }
