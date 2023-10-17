@@ -2,21 +2,21 @@
 
 char* prompt(void)
 {	
-	char* inp, len;
+	char* inp;
 	ssize_t text;	
-	size_t bufsize = 32;
+	size_t bufsize = 32; /*, len;*/
 
-	inp = (char *)malloc(bufsize * sizeof(char));
-	if (!inp)
+	inp = NULL;
+	/*if (!inp)
 	{
 		print_err_mes();
 		exit(errno);
-	}
+	}*/
 
 	printf("$ ");
 	text = getline(&inp, &bufsize, stdin);
-	len = strlen(inp);
-	inp[len - 1] = '\0';
+	/*len = strlen(inp);
+	inp[len - 1] = '\0';*/
 
 	if (text == -1)
 	{

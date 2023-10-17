@@ -1,39 +1,64 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char** check_path(char *cmd)
 {
-	char *path, *tok;
-	char **arr = malloc(sizeof(char*) * 1024);
-	char **newarr = malloc (sizeof(char*) * 1024);
-	char *str = malloc(sizeof(char *));
-	
-	char *buff;
-	int i = 0;
+    char *path, *tok;
+    char **arr = NULL;
+    char **newarr = NULL;
+    char *buff;
+    int i = 0, j = 0;
 
-	path = getenv("PATH");
-	printf("%s", path);
-	buff = strdup(path);
+    path = getenv("PATH");
+    if (!path) {
+        return NULL; /* Handle the case where PATH is not set.*/
+    }
 
-	tok = strtok(buff, ":");
-	while (tok)
-	{
-		arr[i] = tok;
-		tok = strtok(NULL, ":");
-		i++;
-	}
-	i = 0;
-	while (arr[i])
-		{
-			str = strdup(arr[i]);
-			strcat(str, "/");
-			strcat(str, cmd);
-			newarr[i] = str;
-			i++;
-		}
-	
-	/*free_2d(arr);*/
-	free(arr);
-	free(str);
-	free(buff);
-	return (newarr);
+    buff = strdup(path);
+
+    /* Count the number of paths*/
+    tok = strtok(buff, ":");
+    while (tok)
+    {
+        i++;
+        tok = strtok(NULL, ":");
+    }
+
+    /* Allocate memory for arr and newarr*/
+    arr = (char**)malloc(sizeof(char*) * (i + 1));
+    newarr = (char**)malloc(sizeof(char*) * (i + 1));
+
+    /* Reset buff and i*/
+    strcpy(buff, path);
+    i = 0;
+
+    tok = strtok(buff, ":");
+    while (tok)
+    {
+        arr[i] = strdup(tok);
+        tok = strtok(NULL, ":");
+        i++;
+    }
+
+    /* Append cmd to each path and store in newarr*/
+    for (j = 0; j < i; j++)
+    {
+        newarr[j] = (char*)malloc(strlen(arr[j]) + strlen(cmd) + 2); /* +2 for '/' and null terminator*/
+        strcpy(newarr[j], arr[j]);
+        strcat(newarr[j], "/");
+        strcat(newarr[j], cmd);
+    }
+
+    free(buff);
+
+    /* Free arr since its content is duplicated in newarr*/
+    for (j = 0; j < i; j++)
+    {
+        free(arr[j]);
+    }
+    free(arr);
+
+    return newarr;
 }

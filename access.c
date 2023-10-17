@@ -2,21 +2,21 @@
 
 char *_access(char **arr)
 {
-	int i = 0;
+    int i = 0;
 
-	printf("%s\n", arr[1]);
-	while (arr[i])
-	{
-		printf("%d: %s\n", i, arr[i]);
-		if (access(arr[i], F_OK) == 0)
-		{
-			if (access(arr[i], X_OK) == 0)
-			{
-				return (arr[i]);
-			}
-		}
-		i++;
-	}
-	return (arr[i]);
-	
+    if (arr == NULL || arr[0] == NULL) {
+        return (NULL);
+    }
+
+
+    while (arr[i])
+    {
+        if (access(arr[i], F_OK) == 0 && access(arr[i], X_OK) == 0)
+        {
+            return (arr[i]);
+        }
+        i++;
+    }
+
+    return (NULL);
 }

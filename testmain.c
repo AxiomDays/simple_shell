@@ -26,28 +26,61 @@ int main(int argc, char **argv)
 		}
 
 		tok = strtok(input, " \n");
-		arr = malloc(sizeof(char *) * 4096);
+		arr = (char **)malloc(sizeof(char *) * 4096);
+		if (!arr)
+		{
+			print_err_mes();
+			exit(errno);
+		}
 		while (tok)
 		{
-			arr[i] = tok;
+			arr[i] = strdup(tok);
+			if (!arr[i])
+			{
+				print_err_mes();
+				exit(errno);
+			}
 			tok = strtok(NULL, " \n");
 			i++;
 		}
 
 		arr[i] = NULL;
 
-		path = check_path(arr[0]);
-		ptr = _access(path);
+		if (arr[0][0] == '/')
+		{
+			ptr = handle_full_path(arr[0]);
+		}
+		else
+		{
+			path = check_path(arr[0]);
+			ptr = _access(path);
+		}
 
 		if (ptr == NULL)
+		{
 			print_err_mes();
+			free_2d(arr);
+			free(arr);
+			free(input);
+			continue;
+		}
+
 		arr[0] = ptr;
+
 		pid = fork();
 
-		if (pid == 0)
+		if (pid == -1)
+		{
+			print_err_mes();
+			exit(errno);
+		}
+		else if (pid == 0)
 		{
 			if(execve(arr[0], arr, NULL) == -1)
-				return (-1);
+			{
+				print_err_mes();
+				exit(errno);
+			}
 		}
 		else
 		{
@@ -55,8 +88,9 @@ int main(int argc, char **argv)
 		}
 		free_2d(arr);
 		free(arr);
-		/*free_2d(path);*/
-		free(path);
+		/*free_2d(path);
+		free(ptr);*/
+		/*free(path);*/
 		free(input);
 	}	
 	return 0;

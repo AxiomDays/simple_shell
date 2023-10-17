@@ -22,5 +22,6 @@ int _putchar(char c);
 int _print(char *str);
 void print_number(int n);
 void free_2d(char **ptr);
+char *handle_full_path(char *f_path);
 
 #endif
