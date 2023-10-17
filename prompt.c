@@ -2,16 +2,17 @@
 
 char* prompt(void)
 {	
-	char* input;
+	char* inp;
 	ssize_t text;	
 	size_t bufsize = 32;
 
-	input = (char *)malloc(bufsize * sizeof(char));
+	inp = (char *)malloc(bufsize * sizeof(char));
 
 	printf("$ ");
-	text = getline(&input, &bufsize, stdin);
+	text = getline(&inp, &bufsize, stdin);
+
 	if (text == -1)
 		exit(297);
 
-	return (input);
+	return (inp);
 }
