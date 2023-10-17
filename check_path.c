@@ -5,11 +5,13 @@ char** check_path(char *cmd)
 	char *path, *tok;
 	char **arr = malloc(sizeof(char*) * 1024);
 	char **newarr = malloc (sizeof(char*) * 1024);
-	char str[4096];
+	char *str = malloc(sizeof(char *));
+	
 	char *buff;
 	int i = 0;
 
 	path = getenv("PATH");
+	printf("%s", path);
 	buff = strdup(path);
 
 	tok = strtok(buff, ":");
@@ -22,7 +24,7 @@ char** check_path(char *cmd)
 	i = 0;
 	while (arr[i])
 		{
-			strcpy(str, arr[i]);
+			str = strdup(arr[i]);
 			strcat(str, "/");
 			strcat(str, cmd);
 			newarr[i] = str;
@@ -31,7 +33,7 @@ char** check_path(char *cmd)
 	
 	/*free_2d(arr);*/
 	free(arr);
-	/*free(str);*/
+	free(str);
 	free(buff);
 	return (newarr);
 }

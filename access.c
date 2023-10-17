@@ -7,7 +7,7 @@ char *_access(char **arr)
 	printf("%s\n", arr[1]);
 	while (arr[i])
 	{
-		/*printf("%d\n", i);*/
+		printf("%d: %s\n", i, arr[i]);
 		if (access(arr[i], F_OK) == 0)
 		{
 			if (access(arr[i], X_OK) == 0)

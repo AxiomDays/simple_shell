@@ -27,8 +27,6 @@ int main(int argc, char **argv)
 
 		tok = strtok(input, " \n");
 		arr = malloc(sizeof(char *) * 4096);
-		path = malloc(sizeof(char *) * 4096);
-
 		while (tok)
 		{
 			arr[i] = tok;
