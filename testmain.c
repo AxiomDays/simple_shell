@@ -6,7 +6,7 @@ char *input;
 
 int main(int argc, char **argv)
 {
-	int i = 0, x = 0;
+	int i = 0;
 	int status;
 	char *tok, *ptr;
 	char **arr;
@@ -18,12 +18,16 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		i = 0, x = 0;
+		i = 0;
 		input = prompt();
-		/*printf("%s\n", input);*/
+		if (strlen(input) == 0)
+		{
+			continue;
+		}
+
 		tok = strtok(input, " \n");
-		arr = malloc(sizeof(char *) * 1024);
-		path = malloc(sizeof(char*) * 1024);
+		arr = malloc(sizeof(char *) * 4096);
+		path = malloc(sizeof(char *) * 4096);
 
 		while (tok)
 		{
@@ -31,6 +35,7 @@ int main(int argc, char **argv)
 			tok = strtok(NULL, " \n");
 			i++;
 		}
+
 		arr[i] = NULL;
 
 		path = check_path(arr[0]);
@@ -50,13 +55,11 @@ int main(int argc, char **argv)
 		{
 			wait(&status);
 		}
-		while (x < 1024)
-		{
-			free(arr[x]);
-			x++;
-		}
+		free_2d(arr);
 		free(arr);
+		/*free_2d(path);*/
 		free(path);
+		free(input);
 	}	
 	return 0;
 }

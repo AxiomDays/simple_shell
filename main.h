@@ -21,5 +21,6 @@ void print_err_mes(void);
 int _putchar(char c);
 int _print(char *str);
 void print_number(int n);
+void free_2d(char **ptr);
 
 #endif

@@ -56,3 +56,14 @@ void print_number(int n)
 		_putchar('0' + (m % 10));
 	}
 }
+
+void free_2d(char **ptr)
+{
+	int x = 0;
+
+	while (ptr[x])
+	{
+		free(ptr[x]);
+		x++;
+	}
+}
