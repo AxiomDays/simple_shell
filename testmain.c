@@ -87,10 +87,7 @@ int main(int argc, char **argv)
 			wait(&status);
 		}
 		free_2d(arr);
-		free(arr);
-		/*free_2d(path);
-		free(ptr);*/
-		/*free(path);*/
+		free_2d(path);
 		free(input);
 	}	
 	return 0;

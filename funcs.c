@@ -57,13 +57,13 @@ void print_number(int n)
 	}
 }
 
-void free_2d(char **ptr)
+void free_2d(char** newarr)
 {
-	int x = 0;
-
-	while (ptr[x])
-	{
-		free(ptr[x]);
-		x++;
-	}
+	int i = 0;
+    	if (newarr) {
+        	for (i = 0; newarr[i] != NULL; i++) {
+	            free(newarr[i]);
+        	}
+	        free(newarr);
+	    }
 }
