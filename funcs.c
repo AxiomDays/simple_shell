@@ -56,7 +56,13 @@ void print_number(int n)
 		_putchar('0' + (m % 10));
 	}
 }
-
+/**
+ * free_2d - Entry point
+ *
+ * Description: 'frees an array of pointers'
+ * @ptr: char **ptr
+ * Return: Always 0 (Success)
+ */
 void free_2d(char **ptr)
 {
 	int x = 0;
