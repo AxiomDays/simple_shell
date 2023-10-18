@@ -1,5 +1,11 @@
 #include "main.h"
-
+/**
+ * print_err_mes - Entry point
+ *
+ * Description: 'prints error message'
+ *
+ * Return: Void
+ */
 void print_err_mes(void)
 {
 	err_count++;
