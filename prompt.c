@@ -12,12 +12,14 @@ char *prompt(void)
 	size_t bufsize = 32;
 
 	inp = NULL;
-	printf("$ ");
+	if (isatty(STDIN_FILENO) == 1)
+		_print("$ ");
 	text = getline(&inp, &bufsize, stdin);
 
 	if (text == -1)
 	{
 		free(inp);
+		_print("\n");
 		exit(297);
 	}
 	return (inp);

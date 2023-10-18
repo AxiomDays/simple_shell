@@ -56,10 +56,8 @@ void print_number(int n)
 		_putchar('0' + (m % 10));
 	}
 }
-<<<<<<< HEAD
 
-void free_2d(char** newarr)
-=======
+
 /**
  * free_2d - Entry point
  *
@@ -67,8 +65,7 @@ void free_2d(char** newarr)
  * @ptr: char **ptr
  * Return: Always 0 (Success)
  */
-void free_2d(char **ptr)
->>>>>>> @{u}
+void free_2d(char **newarr)
 {
 	int i = 0;
     	if (newarr) {
