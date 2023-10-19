@@ -53,3 +53,19 @@ char **check_path(char *cmd)
 	free(arr);
 	return (newarr);
 }
+
+/*int main (void)
+{
+	int i = 0;
+	char *inp = "ls";
+	char **container;
+
+	container = check_path(inp);
+	while(container[i])
+	{
+		printf("%s\n", container[i]);
+		i++;
+	}
+	free_2d(container);
+	return 0;
+}*/

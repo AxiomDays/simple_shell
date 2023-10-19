@@ -6,7 +6,8 @@ char *input;
 
 int main(int argc, char **argv)
 {
-	char *ptr, **arr, **path;
+	char *ptr, **arr;
+	char **path = NULL;
 	pid_t pid;
 	progName = argv[0];
 	(void)argc;
@@ -14,8 +15,11 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		input = prompt();
-		if (strlen(input) == 0)
+		if (input == NULL)
+		{
+			free(input);
 			continue;
+		}
 		arr = tok_array(input);
 		if (!arr)
 		{
@@ -36,7 +40,7 @@ int main(int argc, char **argv)
 		{
 			print_err_mes();
 			free_2d(arr);
-			free(input);
+			free(input);		
 			continue;
 		}
 		arr[0] = ptr;
@@ -53,15 +57,25 @@ char** tok_array(char* input)
 	int i = 0;
 	char *tok;
 	char **arr = NULL;
+	char *buf = NULL;
 
-	arr = (char **)malloc(sizeof(char *) * 4096);
+	buf = strdup(input);
+	tok = strtok(buf, " \n");
+	while (tok)
+	{
+		i++;
+		tok = strtok(NULL, " \n");
+	}
+	arr = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!arr)
 	{
 		print_err_mes();
 		free_2d(arr);
 		exit(errno);
 	}
-	tok = strtok(input, " \n");
+	strcpy(buf, input);
+	i = 0;
+	tok = strtok(buf, " \n");
 	while (tok)
 	{
 		arr[i] = strdup(tok);
@@ -74,6 +88,7 @@ char** tok_array(char* input)
 		tok = strtok(NULL, " \n");
 		i++;
 	}
+	free(buf);
 	return (arr);
 }
 

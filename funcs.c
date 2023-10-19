@@ -72,4 +72,5 @@ void free_2d(char **ptr)
 		free(ptr[x]);
 		x++;
 	}
+	free(ptr);
 }
