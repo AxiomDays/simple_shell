@@ -1,5 +1,12 @@
 #include "main.h"
-
+/**
+ * main - Entry point
+ *
+ * Description: 'main shell function'
+ * @argc: int argc
+ * @argv: int argv
+ * Return: Always 0 (Success)
+ */
 int err_count = 0;
 char *progName;
 char *input;
@@ -51,7 +58,13 @@ int main(int argc, char **argv)
 	}	
 	return 0;
 }
-
+/**
+ * tok_array - Entry point
+ *
+ * Description: 'tokenizes the array'
+ * @input: char input
+ * Return: Always 0 (Success)
+ */
 char** tok_array(char* input)
 {
 	int i = 0;
@@ -91,7 +104,14 @@ char** tok_array(char* input)
 	free(buf);
 	return (arr);
 }
-
+/**
+ * pid_check - Entry point
+ *
+ * Description: 'checks the value of the pid then runs code'
+ * @pid: pid_t pid
+ * @arr: char** arr
+ * Return: Always 0 (Success)
+ */
 int pid_check (pid_t pid, char** arr)
 {
 	int status;
