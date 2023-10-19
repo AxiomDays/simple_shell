@@ -1,4 +1,7 @@
 #include "main.h"
+int err_count = 0;
+char *progName;
+char *input;
 /**
  * main - Entry point
  *
@@ -7,10 +10,6 @@
  * @argv: int argv
  * Return: Always 0 (Success)
  */
-int err_count = 0;
-char *progName;
-char *input;
-
 int main(int argc, char **argv)
 {
 	char *ptr, **arr;
