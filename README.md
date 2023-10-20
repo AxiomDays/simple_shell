@@ -1,2 +1,1 @@
-# simple_shell
-Repository for ALX 0x16-Simple Shell
+A collaboration project on simple shell that emulate linux bash shell
