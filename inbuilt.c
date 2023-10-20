@@ -9,12 +9,13 @@
 
 int __exit(char **tokens)
 {
+	int code = errno;
 	if (tokens[1] != NULL)
-		errno = _atoi(tokens[1]);
-	else if (tokens[1] == NULL && errno != 0)
-		exit(errno);
+		code = _atoi(tokens[1]);
+	else if (tokens[1] == NULL && code == 25)
+		code = 0;
 	_free(tokens);
-	exit(errno);
+	exit(code);
 }
 
 
