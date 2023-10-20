@@ -64,6 +64,7 @@ void non_getlne(char *program)
 	size_t n = 0;
 	ssize_t chars = 0;
 	int x = 0;
+	int built;
 
 	signal(SIGINT, sig_h);
 	while (1)
@@ -94,7 +95,14 @@ void non_getlne(char *program)
 			}
 			if (_strcmp(tokens[0], "exit") == 0)
 				free(linebuff);
-			if (inbuilts(tokens) == NOT_INBUILT)
+			built = inbuilts(tokens);
+			if (built == 2)
+			{ 
+				fprintf(stderr, "%s: %d: %s: Illegal number: %s\n", program, x, tokens[0], tokens[1]);
+				_free(tokens);
+				exit(2);
+			}
+			if (built == NOT_INBUILT)
 			{
 				if (execute_bin(tokens) != 0)
 					errno = printerr(x, tokens[0], program);

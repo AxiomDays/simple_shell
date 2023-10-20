@@ -11,7 +11,13 @@ int __exit(char **tokens)
 {
 	int code = errno;
 	if (tokens[1] != NULL)
+	{
 		code = _atoi(tokens[1]);
+		if (!_isdigit(tokens[1]) || code < 0)
+		{
+			return (2);
+		}
+	}
 	else if (tokens[1] == NULL && code == 25)
 		code = 0;
 	_free(tokens);
