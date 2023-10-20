@@ -65,5 +65,6 @@ int _env(char **tokens)
 		write(STDOUT_FILENO, ptr, _strlen(ptr));
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	return (0);
+	errno = 0;
+	return (EXIT_SUCCESS);
 }
