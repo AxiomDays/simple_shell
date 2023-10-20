@@ -6,6 +6,25 @@ char *input;
 
 int main(int argc, char **argv)
 {
+	if isatty((STDIN_FILENO) == 1)
+	{
+		interactive_mode(argc, argv);
+	}
+	else
+	{
+		non_inter_mode(argc, argv);
+	}
+}
+
+void non_inter_mode(int argc, char **argv)
+{
+	char *input;
+	input = prompt();
+	while (
+}
+
+void interactive_mode(int argc, char **argv)
+{
 	char *ptr, **arr, **path;
 	pid_t pid;
 	progName = argv[0];
@@ -42,19 +61,19 @@ int main(int argc, char **argv)
 		arr[0] = ptr;
 		pid = fork();
 		pid_check(pid, arr);
+		/*free_2d(path);*/
 		free_2d(arr);
 		free(input);
 	}	
-	return 0;
+	return (0);
 }
-
 char** tok_array(char* input)
 {
 	int i = 0;
 	char *tok;
 	char **arr = NULL;
 
-	arr = (char **)malloc(sizeof(char *) * 4096);
+	arr = (char **)malloc(sizeof(char *) * 32);
 	if (!arr)
 	{
 		print_err_mes();
@@ -81,24 +100,25 @@ int pid_check (pid_t pid, char** arr)
 {
 	int status;
 
-	 	if (pid == -1)
-                {
-                        print_err_mes();
-                        exit(errno);
-                }
-                else if (pid == 0)
-                {
-                        if(execve(arr[0], arr, NULL) == -1)
-                        {
-                                print_err_mes();
-				free_2d(arr);
-                                exit(errno);
-                        }
-                }
-                else
-                {
-                        wait(&status);
-                }
-		return 0;
+	if (pid == -1)
+	{
+		print_err_mes();
+		exit(errno);
+	}
+	else if (pid == 0)
+	{
+		if (execve(arr[0], arr, NULL) == -1)
+		{
+			free_2d(arr);
+			print_err_mes();
+		}
+		exit(errno);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			errno = WIFEXITED(status);
+	}
+	return(0);
 }
-

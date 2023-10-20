@@ -46,10 +46,12 @@ char **check_path(char *cmd)
 		strcat(newarr[j], cmd);
 	}
 	free(buff);
-	for (j = 0; j < i; j++)
+	/*for (j = 0; j < i; j++)
 	{
 		free(arr[j]);
 	}
-	free(arr);
+	free(arr);*/
+	if (arr != NULL)
+		free_2d(arr);
 	return (newarr);
 }

@@ -19,7 +19,28 @@ char *prompt(void)
 	if (text == -1)
 	{
 		free(inp);
-		_print("\n");
+		exit(297);
+	}
+	if (inp[0] == '\n')
+	{
+		free(inp);
+		continue;
+	}
+	return (inp);
+}
+
+char *non_inter_prompt(void)
+{
+	char *inp;
+	ssize_t text;
+	size_t bufsize = 32;
+
+	inp = NULL;
+	text = getline(&inp, &bufsize, stdin);
+
+	if (text == -1)
+	{
+		free(inp);
 		exit(297);
 	}
 	return (inp);
