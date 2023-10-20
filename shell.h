@@ -49,6 +49,6 @@ int _env(char **tokens);
 void _free(char **arr);
 void sig_h(int signal);
 int _atoi(char *s);
-
+int __cd(char **tokens);
 
 #endif
