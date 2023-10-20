@@ -40,6 +40,11 @@ void getlne(char *prompt, char *program, size_t is_inter)
 		if (chars > 1)
 		{
 			tokens = sep(linebuff);
+			if (tokens[0] == NULL)
+			{
+				_free(tokens);
+				continue;
+			}
 			if (_strcmp(tokens[0], "exit") == 0)
 				free(linebuff);
 			if (inbuilts(tokens) == NOT_INBUILT)
@@ -82,6 +87,11 @@ void non_getlne(char *program)
 		if (chars > 1)
 		{
 			tokens = sep(linebuff);
+			if (tokens[0] == NULL)
+			{
+				_free(tokens);
+				continue;
+			}
 			if (_strcmp(tokens[0], "exit") == 0)
 				free(linebuff);
 			if (inbuilts(tokens) == NOT_INBUILT)
