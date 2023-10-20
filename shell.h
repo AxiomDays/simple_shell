@@ -50,6 +50,6 @@ void _free(char **arr);
 void sig_h(int signal);
 int _atoi(char *s);
 int _isdigit(char *input);
-
+int __cd(char **tokens);
 
 #endif
