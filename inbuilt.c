@@ -9,10 +9,13 @@
 
 int __exit(char **tokens)
 {
+	int code = errno;
 	if (tokens[1] != NULL)
-		errno = _atoi(tokens[1]);
+		code = _atoi(tokens[1]);
+	else if (tokens[1] == NULL && code == 25)
+		code = 0;
 	_free(tokens);
-	exit(errno);
+	exit(code);
 }
 
 /**
@@ -109,5 +112,6 @@ int _env(char **tokens)
 		write(STDOUT_FILENO, ptr, _strlen(ptr));
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	return (0);
+	errno = 0;
+	return (EXIT_SUCCESS);
 }
