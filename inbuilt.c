@@ -11,8 +11,8 @@ int __exit(char **tokens)
 {
 	if (tokens[1] != NULL)
 		errno = _atoi(tokens[1]);
-	else if (tokens[1] == NULL && errno == 0)
-		errno = 0;
+	else if (tokens[1] == NULL && errno != 0)
+		exit(errno);
 	_free(tokens);
 	exit(errno);
 }
