@@ -102,6 +102,12 @@ void non_getlne(char *program)
 				_free(tokens);
 				exit(2);
 			}
+			if (built == -1)
+			{ 
+				fprintf(stderr, "%s: %d: %s: can't cd to %s\n", program, x, tokens[0], tokens[1]);
+				_free(tokens);
+				continue;
+			}
 			if (built == NOT_INBUILT)
 			{
 				if (execute_bin(tokens) != 0)
