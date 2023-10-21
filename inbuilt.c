@@ -86,6 +86,8 @@ int inbuilts(char **tokens)
 		{"exit", __exit},
 		{"env", _env},
 		{"cd", __cd},
+		{"setenv", setenv_inbuilt},
+		{"unsetenv", unsetenv_inbuilt},
 		{NULL, NULL}
 	};
 

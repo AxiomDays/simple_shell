@@ -53,5 +53,9 @@ int _isdigit(char *input);
 int __cd(char **tokens);
 char **colon_sep(char *lines);
 int tok_run(char *linebuff, int x, char *program);
+int unsetenv_inbuilt(char **tokens);
+int setenv_inbuilt(char **tokens);
+int unset_env(char *key);
+int set_env(char *key, char *value);
 
 #endif
