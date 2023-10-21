@@ -28,5 +28,6 @@ int printerr(int x, char *cmd, char *prog)
 		fprintf(stderr, "%s: %d: %s %s\n", prog, x, cmd, msg1);
 		return (126);
 	}
+
 	return (0);
 }

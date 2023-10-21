@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #define vo (void)
 #define NOT_INBUILT 4096
 #define PROMPT "$ "
@@ -57,5 +58,8 @@ int unsetenv_inbuilt(char **tokens);
 int setenv_inbuilt(char **tokens);
 int unset_env(char *key);
 int set_env(char *key, char *value);
+void readline(char *prog, char *file);
+char **file_sep(char *lines);
+int file_run(char *linebuff, int x, char *program, char *filen);
 
 #endif
