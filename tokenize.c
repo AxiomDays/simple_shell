@@ -27,3 +27,25 @@ char **sep(char *lines)
 	arr[i] = NULL;
 	return (arr);
 }
+
+char **colon_sep(char *lines)
+{
+	char **arr, *token;
+        size_t i = 0;
+
+        arr = malloc(64 * sizeof(char *));
+        if (arr == NULL)
+        {
+                perror("Unable to allocate space in memory for arr");
+                exit(99);
+        }
+
+        token = strtok(lines, ";");
+        while (token)
+        {
+                arr[i++] = _strdup(token);
+                token = strtok(NULL, ";");
+        }
+        arr[i] = NULL;
+        return (arr);	
+}

@@ -51,5 +51,6 @@ void sig_h(int signal);
 int _atoi(char *s);
 int _isdigit(char *input);
 int __cd(char **tokens);
+char **colon_sep(char *lines);
 
 #endif

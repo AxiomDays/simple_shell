@@ -11,10 +11,11 @@
 
 void getlne(char *prompt, char *program, size_t is_inter)
 {
-	char *linebuff = NULL, *nl = "", **tokens;
+	char *linebuff = NULL, *nl = "", **faketok, **tokens;
 	size_t n = 0;
 	ssize_t chars = 0;
 	int x = 0;
+	int j = 0;
 
 	signal(SIGINT, sig_h);
 	while (1)
@@ -23,6 +24,7 @@ void getlne(char *prompt, char *program, size_t is_inter)
 		(is_inter) ? write(STDOUT_FILENO, prompt, _strlen(prompt))
 			: write(STDOUT_FILENO, "", 0);
 		chars = getline(&linebuff, &n, stdin);
+
 		if (chars != -1)
 			linebuff[chars - 1] = '\0';
 		if (chars == 0)
@@ -39,22 +41,35 @@ void getlne(char *prompt, char *program, size_t is_inter)
 		}
 		if (chars > 1)
 		{
-			tokens = sep(linebuff);
-			if (tokens[0] == NULL)
+			faketok = colon_sep(linebuff);
+			while(faketok[j])
 			{
+				tokens = sep(faketok[j]);
+				if (tokens[0] == NULL)
+				{
+					_free(tokens);
+					continue;
+				}
+				if (_strcmp(tokens[0], "exit") == 0)
+				{
+					_free(faketok);
+					free(linebuff);
+				}
+				if (inbuilts(tokens) == NOT_INBUILT)
+				{
+					if (execute_bin(tokens) != 0)
+						errno = printerr(x, tokens[0], program);
+				}
 				_free(tokens);
-				continue;
+				free(faketok[j]);
+				j++;
 			}
-			if (_strcmp(tokens[0], "exit") == 0)
-				free(linebuff);
-			if (inbuilts(tokens) == NOT_INBUILT)
-			{
-				if (execute_bin(tokens) != 0)
-					errno = printerr(x, tokens[0], program);
-			}
+			free(faketok);
 		}
-		if (chars > 1 || chars == -1)
+		/*if (chars > 1 || chars == -1)
+		{
 			_free(tokens);
+		}*/
 	}
 }
 
