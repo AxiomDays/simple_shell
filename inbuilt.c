@@ -10,6 +10,7 @@
 int __exit(char **tokens)
 {
 	int code = errno;
+
 	if (tokens[1] != NULL)
 	{
 		code = _atoi(tokens[1]);
@@ -63,7 +64,7 @@ int __cd(char **tokens)
 		getcwd(pwd, 4096);
 		setenv("PWD", pwd, 1);
 		if (prev_flag)
-			write(STDOUT_FILENO, pwd, _strlen(pwd)), 
+			write(STDOUT_FILENO, pwd, _strlen(pwd)),
 			write(STDOUT_FILENO, "\n", 1);
 	}
 

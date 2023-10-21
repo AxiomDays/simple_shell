@@ -2,7 +2,7 @@
 
 /**
  * _isdigit - Checks if a string contains onl digits
- * @s: String to check
+ * @input: String to check
  * Return: 1 if true else 0
  */
 int _isdigit(char *input)

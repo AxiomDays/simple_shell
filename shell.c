@@ -34,7 +34,9 @@ int main(int __attribute__ ((unused)) ac, char **av)
 	{
 		non_getlne(av[0]);
 	}
-	/*prompt = "";
-	getlne(prompt, av[0], is_inter);*/
+	/*
+	 * prompt = "";
+	 *getlne(prompt, av[0], is_inter);
+	 */
 	return (0);
 }

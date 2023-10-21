@@ -34,7 +34,9 @@ void getlne(char *prompt, char *program, size_t is_inter)
 		}
 		if (chars == -1)
 		{
-			/*write(STDOUT_FILENO, "\n", 1);*/
+			/*
+			 * write(STDOUT_FILENO, "\n", 1);
+			 */
 			free(linebuff);
 			exit(errno);
 		}
@@ -42,12 +44,19 @@ void getlne(char *prompt, char *program, size_t is_inter)
 		{
 			tok_run(linebuff, x, program);
 		}
-		/*if (chars > 1 || chars == -1)
+		/*
+		 * if (chars > 1 || chars == -1)
 		{
 			_free(tokens);
-		}*/
+		}
+		*/
 	}
 }
+
+/**
+ * non_getlne - gets line from user and execute command
+ * @program: name of program
+ */
 
 void non_getlne(char *program)
 {
@@ -71,7 +80,9 @@ void non_getlne(char *program)
 		}
 		if (chars == -1)
 		{
-			/*write(STDOUT_FILENO, "\n", 1);*/
+			/*
+			 * write(STDOUT_FILENO, "\n", 1);
+			 */
 			free(linebuff);
 			exit(errno);
 		}
@@ -79,8 +90,10 @@ void non_getlne(char *program)
 		{
 			tok_run(linebuff, x, program);
 		}
-		/*if (chars > 1 || chars == -1)
-			_free(tokens);*/
+		/*
+		 * if (chars > 1 || chars == -1)
+		 * _free(tokens);
+		 */
 	}
 }
 
@@ -105,6 +118,14 @@ void sig_h(int sig)
 	}
 }
 
+/**
+ * tok_run - tokenizes function for getlne and non_getlne
+ * @linebuff: buffer
+ * @x: counter for while loop
+ * @program: program name
+ * Return: integer
+ */
+
 int tok_run(char *linebuff, int x, char *program)
 {
 	char **faketok, **tokens;
@@ -121,20 +142,18 @@ int tok_run(char *linebuff, int x, char *program)
 			continue;
 		}
 		if (_strcmp(tokens[0], "exit") == 0)
-		{
-			free(linebuff);
-			_free(faketok);
-		}
+			free(linebuff), _free(faketok);
 		built = inbuilts(tokens);
 		if (built == 2)
-		{ 
-			fprintf(stderr, "%s: %d: %s: Illegal number: %s\n", program, x, tokens[0], tokens[1]);
-			_free(tokens);
-			exit(2);
+		{
+			fprintf(stderr, "%s: %d: %s: Illegal number: %s\n",
+					program, x, tokens[0], tokens[1]);
+			_free(tokens), exit(2);
 		}
 		if (built == -1)
 		{
-			fprintf(stderr, "%s: %d: %s: can't cd to %s\n", program, x, tokens[0], tokens[1]);
+			fprintf(stderr, "%s: %d: %s: can't cd to %s\n"
+					, program, x, tokens[0], tokens[1]);
 			_free(tokens);
 			continue;
 		}
@@ -145,10 +164,7 @@ int tok_run(char *linebuff, int x, char *program)
 				errno = printerr(x, tokens[0], program);
 			}
 		}
-		_free(tokens);
-		free(faketok[j]);
-		j++;
-	}
-	free(faketok);
+		_free(tokens), free(faketok[j]), j++;
+	} free(faketok);
 	return (0);
 }
