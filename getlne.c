@@ -139,7 +139,7 @@ int tok_run(char *linebuff, int x, char *program)
 		if (tokens[0] == NULL)
 		{
 			_free(tokens);
-			continue;
+			return (1);
 		}
 		if (_strcmp(tokens[0], "exit") == 0)
 			free(linebuff), _free(faketok);
