@@ -53,20 +53,20 @@ void readline(char *prog, char *file)
 	char *filen = file;
 	int file_descriptor = open(filen, O_RDONLY);
 	ssize_t chars;
-	char cmds[4096];
+	char cmds[4096] = "\0";
 	vo chars;
 
 	if (file_descriptor == -1)
 	{
 		fprintf(stderr, "%s: %d: Can't open %s\n", prog, x, filen);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 
 	chars = read(file_descriptor, cmds, sizeof(cmds));
 	if (chars == 1)
 	{
 		fprintf(stderr, "%s: %d: No input in %s\n", prog, x, filen);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	if (chars > 1)
 	{
