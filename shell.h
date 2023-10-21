@@ -52,5 +52,6 @@ int _atoi(char *s);
 int _isdigit(char *input);
 int __cd(char **tokens);
 char **colon_sep(char *lines);
+int tok_run(char *linebuff, int x, char *program);
 
 #endif

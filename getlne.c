@@ -11,11 +11,10 @@
 
 void getlne(char *prompt, char *program, size_t is_inter)
 {
-	char *linebuff = NULL, *nl = "", **faketok, **tokens;
+	char *linebuff = NULL, *nl = "";
 	size_t n = 0;
 	ssize_t chars = 0;
 	int x = 0;
-	int j = 0;
 
 	signal(SIGINT, sig_h);
 	while (1)
@@ -41,30 +40,7 @@ void getlne(char *prompt, char *program, size_t is_inter)
 		}
 		if (chars > 1)
 		{
-			faketok = colon_sep(linebuff);
-			while(faketok[j])
-			{
-				tokens = sep(faketok[j]);
-				if (tokens[0] == NULL)
-				{
-					_free(tokens);
-					continue;
-				}
-				if (_strcmp(tokens[0], "exit") == 0)
-				{
-					_free(faketok);
-					free(linebuff);
-				}
-				if (inbuilts(tokens) == NOT_INBUILT)
-				{
-					if (execute_bin(tokens) != 0)
-						errno = printerr(x, tokens[0], program);
-				}
-				_free(tokens);
-				free(faketok[j]);
-				j++;
-			}
-			free(faketok);
+			tok_run(linebuff, x, program);
 		}
 		/*if (chars > 1 || chars == -1)
 		{
@@ -75,12 +51,10 @@ void getlne(char *prompt, char *program, size_t is_inter)
 
 void non_getlne(char *program)
 {
-	char *linebuff = NULL, *nl = "", **faketok, **tokens;
+	char *linebuff = NULL, *nl = "";
 	size_t n = 0;
 	ssize_t chars = 0;
 	int x = 0;
-	int j = 0;
-	int built;
 
 	signal(SIGINT, sig_h);
 	while (1)
@@ -103,45 +77,7 @@ void non_getlne(char *program)
 		}
 		if (chars > 1)
 		{
-			faketok = colon_sep(linebuff);
-			while (faketok[j])
-			{
-
-				tokens = sep(faketok[j]);
-				if (tokens[0] == NULL)
-				{
-					_free(tokens);
-					continue;
-				}
-				if (_strcmp(tokens[0], "exit") == 0)
-				{
-					free(linebuff);
-					_free(faketok);
-				}
-				built = inbuilts(tokens);
-				if (built == 2)
-				{ 
-					fprintf(stderr, "%s: %d: %s: Illegal number: %s\n", program, x, tokens[0], tokens[1]);
-					_free(tokens);
-					exit(2);
-				}
-				if (built == -1)
-				{	 
-					fprintf(stderr, "%s: %d: %s: can't cd to %s\n", program, x, tokens[0], tokens[1]);
-					_free(tokens);
-					continue;
-				}
-				if (built == NOT_INBUILT)
-				{
-					if (execute_bin(tokens) != 0)
-						errno = printerr(x, tokens[0], program);
-				}
-				_free(tokens);
-				free(faketok[j]);
-				j++;
-			}
-			free(faketok);
-
+			tok_run(linebuff, x, program);
 		}
 		/*if (chars > 1 || chars == -1)
 			_free(tokens);*/
@@ -167,4 +103,52 @@ void sig_h(int sig)
 		}
 		fflush(stdout);
 	}
+}
+
+int tok_run(char *linebuff, int x, char *program)
+{
+	char **faketok, **tokens;
+	int j = 0;
+	int built;
+
+	faketok = colon_sep(linebuff);
+	while (faketok[j])
+	{
+		tokens = sep(faketok[j]);
+		if (tokens[0] == NULL)
+		{
+			_free(tokens);
+			continue;
+		}
+		if (_strcmp(tokens[0], "exit") == 0)
+		{
+			free(linebuff);
+			_free(faketok);
+		}
+		built = inbuilts(tokens);
+		if (built == 2)
+		{ 
+			fprintf(stderr, "%s: %d: %s: Illegal number: %s\n", program, x, tokens[0], tokens[1]);
+			_free(tokens);
+			exit(2);
+		}
+		if (built == -1)
+		{
+			fprintf(stderr, "%s: %d: %s: can't cd to %s\n", program, x, tokens[0], tokens[1]);
+			_free(tokens);
+			continue;
+		}
+		if (built == NOT_INBUILT)
+		{
+			if (execute_bin(tokens) != 0)
+			{
+				errno = printerr(x, tokens[0], program);
+			}
+		}
+		_free(tokens);
+		free(faketok[j]);
+		j++;
+	}
+	free(faketok);
+	return (0);
 }

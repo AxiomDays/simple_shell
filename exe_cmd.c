@@ -18,7 +18,11 @@ void execute_cmd(char **tokens, char *path)
 
 	if (child == 0)
 	{
-		execve(path, tokens, environ);
+		if (execve(path, tokens, environ) == -1)
+		{
+			perror(NULL);
+		}
+		exit(0);
 	}
 	if (child > 0)
 	{
