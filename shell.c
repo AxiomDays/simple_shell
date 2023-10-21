@@ -58,11 +58,17 @@ void readline(char *prog, char *file)
 
 	if (file_descriptor == -1)
 	{
-		perror("File opening failed");
+		fprintf(stderr, "%s: %d: Can't open %s\n", prog, x, filen);
 		exit(EXIT_FAILURE);
 	}
 
-	if (read(file_descriptor, cmds, sizeof(cmds)) > 0)
+	chars = read(file_descriptor, cmds, sizeof(cmds));
+	if (chars == 1)
+	{
+		fprintf(stderr, "%s: %d: No input in %s\n", prog, x, filen);
+		exit(EXIT_FAILURE);
+	}
+	if (chars > 1)
 	{
 		code = file_run(cmds, x, prog, filen);
 	}
