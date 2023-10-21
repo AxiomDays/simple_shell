@@ -140,6 +140,7 @@ int tok_run(char *linebuff, int x, char *program)
 		{
 			errno = 0;
 			_free(tokens);
+			_free(faketok);
 			return (1);
 		}
 		if (_strcmp(tokens[0], "exit") == 0)
