@@ -138,6 +138,7 @@ int tok_run(char *linebuff, int x, char *program)
 		tokens = sep(faketok[j]);
 		if (tokens[0] == NULL)
 		{
+			errno = 0;
 			_free(tokens);
 			return (1);
 		}
